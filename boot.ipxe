@@ -1,0 +1,11 @@
+#!ipxe
+dhcp
+
+# replace with host running linuxkit serve
+set base http://127.0.0.1:8080
+set name bmtune-docker
+set cmdline isolcpus=2 nohz_full=2 rcu_nocbs=2 rcu_nocb_poll intel_pstate=disable nosoftlockup=0 cpuidle.off=1 intel_idle.max_cstate=0 processor.max_cstate=0
+
+kernel ${base}/${name}-kernel page_poison=1 ip=dhcp nomodeset ro serial ${cmdline}
+initrd ${base}/${name}-initrd.img
+boot
